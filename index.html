@@ -1,0 +1,463 @@
+<!DOCTYPE html>
+<html lang="en">
+<title>Physical Computing Fall 2026</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Comic+Neue:ital,wght@0,300;0,400;0,700;1,300;1,400;1,700&family=Handlee&display=swap">
+<style>
+body,h1,h2,h3,h4,h5 {
+  font-family: "Comic Neue", "Comic Sans MS", cursive, sans-serif
+  }
+body {
+  font-size:16px;
+  }
+h1 { 
+  font-size:30px;
+  }
+h2 {
+  font-size:25px;
+  }
+  h3 {
+  font-size:18px;
+  }
+img {
+  width: 100%;
+  height: 100%;
+}
+.grid {
+  display: inline-grid;
+  grid-template-columns: auto auto auto auto auto;;
+}
+.w3-half img{
+  margin-bottom:-6px;
+  margin-top:16px;
+  opacity:0.8;
+  cursor:pointer
+  } */
+.w3-half img:hover{
+  opacity:1
+  }
+
+.container {
+    position: relative;
+    overflow: hidden;
+    width: 100%;
+    padding-top: 56.25%;
+    /* 16:9 Aspect Ratio (divide 9 by 16 = 0.5625) */
+}
+.responsive-iframe {
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    width: 100%;
+    height: 100%;
+}
+</style>
+
+<!-- ===== más mikaela theme layer (visual only — layout untouched) ===== -->
+<style>
+:root {
+  --space-deep: #2e2366;
+  --space: #4b3a96;
+  --space-light: #6a52c4;
+  --lavender: #c9b8ff;
+  --lavender-soft: #ddd2ff;
+  --pink: #f6c5e6;
+  --ink: #f4efff;
+  --ink-muted: #d3c8f2;
+  --glass: rgba(255, 255, 255, 0.07);
+  --glass-border: rgba(221, 210, 255, 0.28);
+  --grad: linear-gradient(90deg, var(--lavender) 0%, var(--pink) 100%);
+}
+
+html { scroll-behavior: smooth; }
+
+body {
+  color: var(--ink);
+  background-color: var(--space);
+  background-image:
+    /* stars */
+    radial-gradient(1.5px 1.5px at 12% 18%, rgba(255,255,255,.8) 50%, transparent 51%),
+    radial-gradient(1px 1px at 34% 72%, rgba(255,255,255,.6) 50%, transparent 51%),
+    radial-gradient(1.5px 1.5px at 58% 9%, rgba(255,255,255,.7) 50%, transparent 51%),
+    radial-gradient(1px 1px at 76% 44%, rgba(255,255,255,.55) 50%, transparent 51%),
+    radial-gradient(2px 2px at 91% 81%, rgba(255,255,255,.6) 50%, transparent 51%),
+    radial-gradient(1px 1px at 47% 53%, rgba(255,255,255,.5) 50%, transparent 51%),
+    radial-gradient(1.5px 1.5px at 22% 91%, rgba(255,255,255,.6) 50%, transparent 51%),
+    radial-gradient(1px 1px at 67% 27%, rgba(255,255,255,.5) 50%, transparent 51%),
+    /* glows */
+    radial-gradient(circle at 85% 12%, rgba(160, 120, 255, .45), transparent 40%),
+    radial-gradient(circle at 10% 70%, rgba(246, 197, 230, .14), transparent 45%),
+    linear-gradient(180deg, var(--space) 0%, var(--space-deep) 100%);
+  background-size:
+    420px 420px, 420px 420px, 420px 420px, 420px 420px,
+    420px 420px, 420px 420px, 420px 420px, 420px 420px,
+    100% 100%, 100% 100%, 100% 100%;
+  background-attachment: fixed;
+  letter-spacing: .01em;
+}
+
+/* film grain overlay */
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: -1;
+  opacity: .16;
+  mix-blend-mode: overlay;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+.w3-sidebar { z-index: 3; }
+
+/* ---------- headings ---------- */
+h1, h2, h3 { font-family: "Handlee", "Comic Neue", cursive; font-weight: 400; color: var(--ink); }
+h1 b, h2 b, h3 b { font-weight: 400; }
+
+#Home {
+  display: inline-block;
+  background: var(--grad);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  line-height: 1.05;
+  padding-bottom: .1em;
+}
+.w3-text-blue, .w3-text-blue b { color: var(--lavender) !important; }
+.w3-text-red,  .w3-text-red b  { color: var(--pink) !important; }
+
+h2 { letter-spacing: .01em; }
+.w3-main h3, .w3-main p { font-family: "Comic Neue", cursive; color: var(--ink-muted); line-height: 1.7; }
+
+/* section titles get the little sparkle like "✦ WHAT I STAND FOR" */
+#Workshop1 > h2::before, #Workshop2 > h2::before, #Activity1 > h2::before,
+#Activity2 > h2::before, #AdditionalResearch > h2::before, #Project2 > h2::before {
+  content: "✦ ";
+  color: var(--pink);
+  font-size: .8em;
+}
+
+/* ---------- dividers: dashed orbit-line style ---------- */
+.w3-main hr {
+  border: 0 !important;
+  border-top: 3px dashed var(--lavender) !important;
+  opacity: .7;
+  border-radius: 0 !important;
+  background: none;
+}
+
+/* ---------- sidebar: glass panel like the nav bar ---------- */
+#mySidebar.w3-light-grey {
+  background: rgba(46, 35, 102, .55) !important;
+  color: var(--ink) !important;
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border-right: 1px solid var(--glass-border);
+  border-radius: 0 28px 28px 0;
+  font-weight: 400 !important;
+}
+#mySidebar h3 {
+  font-family: "Handlee", cursive;
+  color: var(--ink);
+  line-height: 1.35;
+}
+#mySidebar .w3-bar-item {
+  font-family: "Comic Neue", cursive;
+  text-transform: uppercase;
+  letter-spacing: .06em;
+  font-size: 15px;
+  color: var(--ink);
+  border-radius: 999px;
+  margin: 2px 0;
+  white-space: normal;
+  transition: background .2s ease, color .2s ease, transform .2s ease;
+}
+#mySidebar .w3-bar-item:hover,
+#mySidebar .w3-bar-item.w3-hover-white:hover {
+  background: var(--grad) !important;
+  color: var(--space-deep) !important;
+  transform: translateX(4px);
+}
+
+/* ---------- image grids: sticker cards ---------- */
+.grid { gap: 18px; }
+.grid img, #Project2 img {
+  border: 4px solid #fff;
+  border-radius: 18px;
+  object-fit: cover;
+  background: var(--glass);
+  box-shadow: 0 10px 30px rgba(20, 10, 60, .35);
+  cursor: pointer;
+  transition: transform .25s ease, box-shadow .25s ease;
+}
+.grid img:hover, #Project2 img:hover {
+  transform: translateY(-6px) rotate(-1deg);
+  box-shadow: 0 16px 40px rgba(201, 184, 255, .35);
+}
+
+/* ---------- modal: centred over the whole screen ---------- */
+#modal01 {
+  position: fixed;
+  inset: 0;
+  z-index: 50;
+  padding: 32px !important;
+  overflow-y: auto;
+  align-items: center;
+  justify-content: center;
+  background: rgba(30, 22, 70, .88) !important;
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  cursor: zoom-out;
+}
+#modal01 .w3-modal-content {
+  margin: auto;
+  width: auto;
+  max-width: min(960px, 100%);
+  padding: 0 !important;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+#img01 {
+  width: auto;
+  height: auto;
+  max-width: 100%;
+  max-height: 75vh;
+  border: 4px solid #fff;
+  border-radius: 18px;
+  box-shadow: 0 20px 60px rgba(10, 5, 40, .5);
+}
+#caption { font-family: "Comic Neue", cursive; font-size: 18px; color: var(--ink); line-height: 1.6; margin: 20px 0 0; max-width: 720px; }
+#caption a { color: var(--pink); }
+
+/* ---------- all × / close buttons ---------- */
+.w3-button.w3-display-topright,
+.w3-button.w3-display-topleft {
+  width: 48px;
+  height: 48px;
+  padding: 0 !important;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 30px !important;
+  font-weight: 400;
+  line-height: 1;
+  border-radius: 999px;
+  background: var(--grad) !important;
+  color: var(--space-deep) !important;
+  box-shadow: 0 6px 18px rgba(10, 5, 40, .35);
+  transition: transform .2s ease;
+}
+.w3-button.w3-display-topright { position: fixed; top: 24px; right: 24px; }
+.w3-button.w3-display-topleft  { top: 16px; left: 16px; }
+.w3-button.w3-display-topright:hover,
+.w3-button.w3-display-topleft:hover { transform: rotate(90deg) scale(1.05); }
+#mySidebar .w3-display-topleft[style*="display:none"] { display: none !important; }
+
+/* ---------- footer ---------- */
+.w3-light-grey.w3-container:not(#mySidebar) {
+  background: var(--glass) !important;
+  color: var(--ink-muted) !important;
+  border: 1px solid var(--glass-border);
+  border-radius: 28px;
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  margin: 75px 0 24px !important;
+  padding: 28px 32px !important;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px 24px;
+}
+.w3-light-grey.w3-container:not(#mySidebar) p { margin: 0; float: none !important; font-family: "Comic Neue", cursive; }
+.w3-light-grey.w3-container:not(#mySidebar) a { color: var(--pink); text-decoration: none; }
+.w3-light-grey.w3-container:not(#mySidebar) a:hover { text-decoration: underline; }
+.footer-brand {
+  font-family: "Handlee", cursive;
+  font-size: 22px;
+  background: var(--grad);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+.footer-links { display: flex; gap: 20px; align-items: center; }
+
+::selection { background: var(--pink); color: var(--space-deep); }
+</style>
+<body>
+
+<!-- Sidebar/menu -->
+<nav class="w3-sidebar w3-light-grey w3-collapse w3-top w3-large w3-padding" style="z-index:3;width:200px;font-weight:bold;" id="mySidebar"><br>
+  <a href="javascript:void(0)" onclick="w3_close()" class="w3-button w3-display-topleft" style="display:none;font-size:22px"></a>
+  <div class="w3-container">
+    <h3 class="w3-padding-64"><b>IXD<br>DESN 30146<br>Fall 2026</b></h3>
+  </div>
+  <div class="w3-bar-block">
+    <a href="#Home" onclick="w3_close()" class="w3-bar-item w3-button w3-hover-white">Home</a> 
+    <a href="#Module2" onclick="w3_close()" class="w3-bar-item w3-button w3-hover-white">Module 2</a> 
+    <a href="#Workshop1" onclick="w3_close()" class="w3-bar-item w3-button w3-hover-white">Workshop 1</a> 
+    <a href="#Workshop2" onclick="w3_close()" class="w3-bar-item w3-button w3-hover-white">Workshop 2</a>
+    <a href="#Activity1" onclick="w3_close()" class="w3-bar-item w3-button w3-hover-white">Activity 1</a> 
+    <a href="#Activity2" onclick="w3_close()" class="w3-bar-item w3-button w3-hover-white">Activity 2</a>
+    <a href="#AdditionalResearch" onclick="w3_close()" class="w3-bar-item w3-button w3-hover-white">Additional Research or Workshops</a>
+    <a href="#Project2" onclick="w3_close()" class="w3-bar-item w3-button w3-hover-white">Project 2 Prototype</a> 
+  </div>
+</nav>
+
+<!-- Top menu on small screens
+<header class="w3-container w3-top w3-xlarge w3-padding">
+  <a href="javascript:void(0)" class="w3-button w3-red w3-margin-right" onclick="w3_open()">☰</a>
+  <span>Menu</span>
+</header> -->
+
+<!-- 
+  if you want to link your image to a video use one of the following alt links as an example:
+
+  alt="test1Lorem ipsum dolor sit amet, consectetur adipiscing elit test1Lorem ipsum dolor sit amet, consectetur adipiscing elit <a href='https://www.youtube.com/embed/tgbNymZ7vqY' target='_blank'><p>Project Video Link</p></a>"> 
+  alt="test2Lorem ipsum dolor sit amet, consectetur adipiscing elit <div class='container'><iframe class='responsive-iframe' src='https://www.youtube.com/embed/tgbNymZ7vqY'></iframe></div>">
+
+-->
+
+<!-- Overlay effect when opening sidebar on small screens -->
+<div class="w3-overlay" onclick="w3_close()" style="cursor:pointer" title="close side menu" id="myOverlay"></div>
+
+<!-- !PAGE CONTENT! -->
+<div class="w3-main" style="margin-left:220px;margin-right:20px">
+
+  <!-- Header -->
+  <div class="w3-container" style="margin-top:80px" id="default">
+    <h1 class="w3-jumbo" id="Home"><b>Physical Computing</b></h1>
+    <h1 class="w3-xxxlarge w3-text-blue"><b>Weekly Activity Template</b></h1>
+      <h1 class="w3-xxxlarge w3-text-blue"><b>student name put a description here or you will lose grades</b></h1>
+    <hr style="width:50px;border:5px solid grey" class="w3-round">
+  </div>
+  <!-- Boilerplate -->
+  <div id="Module2" class="w3-container" style="margin-top:75px">
+    <h1 class="w3-xxxlarge w3-text-red"><b>Module 2</b></h1>
+    <hr style="width:50px;border:5px solid red" class="w3-round">
+    <h2>MActivity Research</h2>
+    <h3>PLACEHOLDER TEXT, put a description here or you will lose grades
+    </h3>
+  </div>
+  
+  <!-- Project 1 Photo grid (modal) -->
+  <div id="Workshop1" >
+    <h2>Workshop 1 Geurilla Prototyping I</h2>
+    <div class="grid">
+      <img src="images/Workshop1/happy.png" style="width:100%" onclick="onClick(this)" alt="test1Lorem ipsum dolor sit amet, consectetur adipiscing elit test1Lorem ipsum dolor sit amet, consectetur adipiscing elit <a href='https://www.youtube.com/embed/tgbNymZ7vqY' target='_blank'><p>Project Video Link</p></a>"> 
+      <img src="images/Workshop1/happy.png" style="width:100%" onclick="onClick(this)" alt="test2Lorem ipsum dolor sit amet, consectetur adipiscing elit <div class='container'><iframe class='responsive-iframe' src='https://www.youtube.com/embed/tgbNymZ7vqY'></iframe></div>">
+      <img src="images/Workshop1/happy.png" style="width:100%" onclick="onClick(this)" alt="Lorem ipsum dolor sit amet, consectetur adipiscing elit">
+      <img src="images/Workshop1/happy.png" style="width:100%" onclick="onClick(this)" alt="Lorem ipsum dolor sit amet, consectetur adipiscing elit">
+      <img src="images/Workshop1/happy.png" style="width:100%" onclick="onClick(this)" alt="Lorem ipsum dolor sit amet, consectetur adipiscing elit">
+    </div>
+  </div>
+  
+  <div id="Workshop2" class="w3-row-padding">
+    <h2>Workshop 2 Geurilla Prototyping II</h2>
+    <div class="grid">
+      <img src="images/Workshop2/happy.png" style="width:100%" onclick="onClick(this)" alt="test2Lorem ipsum dolor sit amet, consectetur adipiscing elit">
+      <img src="images/Workshop2/happy.png" style="width:100%" onclick="onClick(this)" alt="test3Lorem ipsum dolor sit amet, consectetur adipiscing elit">
+      <img src="images/Workshop2/happy.png" style="width:100%" onclick="onClick(this)" alt="Lorem ipsum dolor sit amet, consectetur adipiscing elit">
+      <img src="images/Workshop2/happy.png" style="width:100%" onclick="onClick(this)" alt="Lorem ipsum dolor sit amet, consectetur adipiscing elit">
+      <img src="images/Workshop2/happy.png" style="width:100%" onclick="onClick(this)" alt="Lorem ipsum dolor sit amet, consectetur adipiscing elit">
+    </div>
+  </div>
+  
+  <hr style="width:90%;border:5px solid grey;margin-top:80px" class="w3-round"></hr>
+
+  <div id="Activity1" >
+    <h2>Activity 1: My Resarch</h2>
+    <div class="grid">
+      <img src="images/Activity1/happy.png" style="width:100%" onclick="onClick(this)" alt="test1Lorem ipsum dolor sit amet, consectetur adipiscing elit test1Lorem ipsum dolor sit amet, consectetur adipiscing elit <a href='https://www.youtube.com/embed/tgbNymZ7vqY' target='_blank'><p>Project Video Link</p></a>"> 
+      <img src="images/Activity1/happy.png" style="width:100%" onclick="onClick(this)" alt="test2Lorem ipsum dolor sit amet, consectetur adipiscing elit <div class='container'><iframe class='responsive-iframe' src='https://www.youtube.com/embed/tgbNymZ7vqY'></iframe></div>">
+      <img src="images/Activity1/happy.png" style="width:100%" onclick="onClick(this)" alt="Lorem ipsum dolor sit amet, consectetur adipiscing elit">
+      <img src="images/Activity1/happy.png" style="width:100%" onclick="onClick(this)" alt="Lorem ipsum dolor sit amet, consectetur adipiscing elit">
+      <img src="images/Activity1/happy.png" style="width:100%" onclick="onClick(this)" alt="Lorem ipsum dolor sit amet, consectetur adipiscing elit">
+    </div>
+  </div>
+
+  <div id="Activity2" class="w3-row-padding">
+    <h2>Activity 2: My Reearch</h2>
+    <div class="grid">
+      <img src="images/Activity2/happy.png" style="width:100%" onclick="onClick(this)" alt="test2Lorem ipsum dolor sit amet, consectetur adipiscing elit">
+      <img src="images/Activity2/happy.png" style="width:100%" onclick="onClick(this)" alt="test3Lorem ipsum dolor sit amet, consectetur adipiscing elit">
+      <img src="images/Activity2/happy.png" style="width:100%" onclick="onClick(this)" alt="Lorem ipsum dolor sit amet, consectetur adipiscing elit">
+      <img src="images/Activity2/happy.png" style="width:100%" onclick="onClick(this)" alt="Lorem ipsum dolor sit amet, consectetur adipiscing elit">
+      <img src="images/Activity2/happy.png" style="width:100%" onclick="onClick(this)" alt="Lorem ipsum dolor sit amet, consectetur adipiscing elit">
+    </div>
+  </div>
+
+  <hr style="width:90%;border:5px solid grey;margin-top:80px" class="w3-round"></hr>
+
+  <div id="AdditionalResearch" class="w3-row-padding">
+    <h2>Additional Research or Workshops</h2>
+    <div class="grid">
+      <img src="images/AdditionalResearch/happy.png" style="width:100%" onclick="onClick(this)" alt="test2Lorem ipsum dolor sit amet, consectetur adipiscing elit">
+      <img src="images/AdditionalResearch/happy.png" style="width:100%" onclick="onClick(this)" alt="test3Lorem ipsum dolor sit amet, consectetur adipiscing elit">
+      <img src="images/AdditionalResearch/happy.png" style="width:100%" onclick="onClick(this)" alt="Lorem ipsum dolor sit amet, consectetur adipiscing elit">
+      <img src="images/AdditionalResearch/happy.png" style="width:100%" onclick="onClick(this)" alt="Lorem ipsum dolor sit amet, consectetur adipiscing elit">
+      <img src="images/AdditionalResearch/happy.png" style="width:100%" onclick="onClick(this)" alt="Lorem ipsum dolor sit amet, consectetur adipiscing elit">
+    </div>
+  </div>
+
+  <hr style="width:90%;border:5px solid grey;margin-top:80px" class="w3-round"></hr>
+  <!-- Boilerplate -->
+  <div id="Project2" class="w3-container" style="margin-top:75px">
+    <h1 class="w3-xxxlarge w3-text-red"><b>Project 2</b></h1>
+    <hr style="width:50px;border:5px solid red" class="w3-round">
+    <h2>Project 2 Prototype</h2>
+    <p>PLACEHOLDER TEXT, put a description here or you will lose grades
+    </p>
+    <img src="images/final/happy.png" style="width:100%" onclick="onClick(this)" alt="test2Lorem ipsum dolor sit amet, consectetur adipiscing elit">
+  </div>
+  
+   <!-- Modal for full size images on click-->
+   <div id="modal01" class="w3-modal w3-grey" style="padding-top:0" onclick="this.style.display='none'">
+    <span class="w3-button w3-black w3-xxlarge w3-display-topright">×</span>
+    <div class="w3-modal-content w3-center w3-transparent" style ="padding:20px">
+      <img id="img01" class="w3-image">
+      <h2 id="caption"></h2>
+
+      <!-- <div id="urLink"></div> -->
+      <!-- <a id="urLink" class="container"><iframe class="responsive-iframe"></iframe></a> -->
+    <!-- </div> -->
+  </div>
+<!-- End page content -->
+</div>
+
+<!-- W3.CSS Container -->
+<div class="w3-light-grey w3-container w3-padding-32" style="margin-top:75px;padding-right:58px">
+  <span class="footer-brand">✦ más mikaela</span>
+  <p>IXD · DESN 30146 · Fall 2026</p>
+  <div class="footer-links">
+    <a href="https://www.masmikaela.design/" target="_blank">Portfolio</a>
+    <a href="#Home">Back to top ↑</a>
+    <p class="w3-right">Powered by <a href="https://www.w3schools.com/w3css/default.asp" title="W3.CSS" target="_blank" class="w3-hover-opacity">w3.css</a></p>
+  </div>
+</div>
+
+<script>
+
+// Modal Image Gallery
+function onClick(element) {
+  document.getElementById("img01").src = element.src;
+
+  document.getElementById("modal01").style.display = "flex";
+  var captionText = document.getElementById("caption");
+  captionText.innerHTML = element.alt;
+
+  // var captionUrl = document.getElementById("urLink");
+  // captionUrl.innerHTML = element.url;
+
+  //document.getElementById("urLink").src = element.url;
+}
+</script>
+
+</body>
+</html>
